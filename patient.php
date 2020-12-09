@@ -9,11 +9,16 @@ if (!isset($_POST['fname']) || !isset($_POST['lname']))
     exit;
 }
 
+
+
 $fname = strlen($_POST['fname']) != 0 ? $_POST['fname'] : NULL;
 $lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
 // echo isset($fname);
 // echo gettype($lname);
-if (isset($fname) && isset($lname)) {
+if (isset($_POST['all'])) {
+    $sql = "SELECT * FROM patient";
+}
+else if (isset($fname) && isset($lname)) {
     $sql = "SELECT * FROM patient WHERE fname='$fname' and lname='$lname'";
 }
 else if (isset($fname)) {

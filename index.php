@@ -21,7 +21,7 @@ $result = mysqli_query($conn, $sql);
     Last name of patient: <input type="text" name="lname">
         <input type="submit">
         <br>
-        <button value="searchAll"  style="margin-top: 20px;">Search all patient</button>
+        <button name="all"  style="margin-top: 20px;">Search all patient</button>
         <button formaction="addPatient.php" method="post">Add new patient</button>
     </form>
     <!-- <?php 
