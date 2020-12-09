@@ -15,7 +15,7 @@ $result = mysqli_query($conn, $sql);
     <title>Hospital</title>
 </head>
 <body>
-    <h1>HELLO WORRLD</h1>
+    <h1>HOSPITAL</h1>
     <form action="index.php" method="post">
     First name of patient: <input type="text" name="fname">
     Last name of patient: <input type="text" name="lname">
@@ -23,6 +23,7 @@ $result = mysqli_query($conn, $sql);
         <br>
         <button name="all"  style="margin-top: 20px;">Search all patient</button>
         <button formaction="addPatient.php" method="post">Add new patient</button>
+        <button formaction="addPatient.php" method="post">Add new patient infor</button>
     </form>
     <!-- <?php 
     // if(isset($_POST["searchAll"])){
