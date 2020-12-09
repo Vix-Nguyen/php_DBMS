@@ -4,11 +4,15 @@ require_once("component.php");
 
 // echo $name[0];
 // echo $name[$nameLength];
+if (!isset($_POST['fname']) || !isset($_POST['lname'])) 
+{
+    exit;
+}
 
 $fname = strlen($_POST['fname']) != 0 ? $_POST['fname'] : NULL;
 $lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
-echo gettype($fname);
-echo gettype($lname);
+// echo isset($fname);
+// echo gettype($lname);
 if (isset($fname) && isset($lname)) {
     $sql = "SELECT * FROM patient WHERE fname='$fname' and lname='$lname'";
 }
