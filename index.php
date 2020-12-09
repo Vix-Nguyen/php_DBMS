@@ -22,10 +22,10 @@ $result = mysqli_query($conn, $sql);
         <input type="submit">
         <br>
         <button value="searchAll"  style="margin-top: 20px;">Search all patient</button>
-        <button>Search patient</button>
+        <button formaction="addPatient.php" method="post">Add new patient</button>
     </form>
-    <?php 
-    if(isset($_POST["searchAll"])){
+    <!-- <?php 
+    // if(isset($_POST["searchAll"])){
 
     ?>
         <table>
@@ -39,13 +39,13 @@ $result = mysqli_query($conn, $sql);
                     <th>Gender</th>
                 </tr>
     <?php
-        while ($row = mysqli_fetch_assoc($result)){
-            searchPatient($row['Id'], $row['Fname'], $row['Lname'], $row['DOB'], $row['Phone'], $row['Address'], $row['Gender']);
-        }
+        // while ($row = mysqli_fetch_assoc($result)){
+        //     searchPatient($row['Id'], $row['Fname'], $row['Lname'], $row['DOB'], $row['Phone'], $row['Address'], $row['Gender']);
+        // }
     ?>
-        </table>
+        </table> -->
     <?php
-    }
+    //} 
     require("patient.php");
     ?>
 </body>
