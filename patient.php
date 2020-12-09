@@ -38,15 +38,12 @@ $result = mysqli_query($conn, $sql);
         <th>Id</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>DoB</th>
         <th>Phone</th>
-        <th>Address</th>
-        <th>Gender</th>
     </tr>
     <?php
     if ($result != FALSE) {
         while ($row = mysqli_fetch_assoc($result)){
-            searchPatient($row['Id'], $row['Fname'], $row['Lname'], $row['DOB'], $row['Phone'], $row['Address'], $row['Gender']);
+            searchPatient($row['Id'], $row['Fname'], $row['Lname'], $row['Phone']);
         }
     }
     ?>
