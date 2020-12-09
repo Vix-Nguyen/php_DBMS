@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+<h1>Add new patient infor</h1>
     <form action="addPatient.php" style="margin-left: 40%;" method="post">
         <label for="fname">First name:</label><br>
         <input type="text" name="fname"  placeholder="John"><br><br>
@@ -13,8 +14,12 @@
         <label for="lname">Last name:</label><br>
         <input type="text" name="lname" placeholder="Smith"><br><br>
 
-        <label for="id">ID:</label><br>
-        <input type="text" name="id" placeholder="IP or OP"><br><br>
+        <label for="class">Class:</label>
+        <select name="class" name="class">
+            <option value="IP" selected>Inpatient</option>
+            <option value="OP">Outpatient</option>
+        </select><br><br>
+        
 
         <label for="DOB">Date of Birth:</label><br>
         <input type="date" name="DOB" ><br><br>
@@ -40,6 +45,7 @@
 
 <?php
 error_reporting(0);
+
 require("connection.php");
 
 
@@ -50,24 +56,70 @@ if (!isset($_POST['submit'])) {
 
 $fname = isset($_POST['fname']) ? $_POST['fname'] : '';
 $lname = isset($_POST['lname']) ? $_POST['lname'] : '';
-$id = isset($_POST['id']) ? $_POST['id'] : '';
+$class = isset($_POST['class']) ? $_POST['class'] : '';
+// $id = isset($_POST['id']) ? $_POST['id'] : '';
 $DOB = isset($_POST['DOB']) ? $_POST['DOB']: '';
 $phone = isset($_POST['phone']) ? $_POST['phone']: '';
 $address = isset($_POST['address']) ? $_POST['address']: '';
 $gender = isset($_POST['Gender']) ? $_POST['Gender']: '';
 
-$sql = "SELECT * FROM patient WHERE Id = '$id'";
-$result = mysqli_query($conn, $sql);
 
+// $result = mysqli_query($conn, $sql);
+// $row = mysqli_fetch_assoc($result);
+$id = '';
 
-if ($id == '') {
-    echo '<script>alert("This ID is not valid")</script>';
-    exit;
+if ($class == "IP") {
+    $sql = "SELECT MAX(A.InpatientId) AS I
+    FROM
+    (SELECT CONVERT(SUBSTRING(Id, 3, 5), UNSIGNED INTEGER) AS InpatientId
+    FROM Patient
+    WHERE Id LIKE 'IP%') AS A;";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $idnew = $row['I'] + 1;
+    // echo $row['I'];
+
+    if ($idnew > 999) {
+        $id = "IP0" . strval($idnew);
+    }
+    else if ($idnew > 99) {
+        $id = "IP00" . strval($idnew);
+    }
+    else if ($idnew > 9) {
+        $id = "IP000" . strval($idnew);
+    }
+    else{
+        $id = "IP0000" . strval($idnew);
+    }
+    session_start();
+    $_SESSION['id'] = $id;
+}
+else{
+    $sql = "SELECT MAX(A.InpatientId) AS I
+    FROM
+    (SELECT CONVERT(SUBSTRING(Id, 3, 5), UNSIGNED INTEGER) AS InpatientId
+    FROM Patient
+    WHERE Id LIKE 'OP%') AS A;";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $idnew = $row['I'] + 1;
+
+    if ($idnew > 999) {
+        $id = "OP0" . strval($idnew);
+    }
+    else if ($idnew > 100) {
+        $id = "OP00" . strval($idnew);
+    }
+    else if ($idnew > 100) {
+        $id = "OP000" . strval($idnew);
+    }
+    else{
+        $id = "OP0000" . strval($idnew);
+    }
 }
 
-if (mysqli_num_rows($result) == 1) {
-  echo '<script>alert("This ID is not unique")</script>';
-} else {
+
+
     $sql = "INSERT INTO patient (fname, lname, id, dob, phone, address, gender)
     VALUES ('$fname', '$lname', '$id', '$dob', '$phone', '$address', '$gender');";
     
@@ -76,8 +128,19 @@ if (mysqli_num_rows($result) == 1) {
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
-}
 
+    if ($class == "IP"){
+        header("location:addInpatient.php");
+    }
+    else{
+        $sql = "INSERT INTO outpatient (id)
+        VALUES ('$id');";    
+        if (mysqli_multi_query($conn, $sql)) {
+            echo '<script>alert("Add OUTpatient successful")</script>';
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
 
 mysqli_close($conn);
 ?>
