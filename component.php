@@ -29,4 +29,17 @@ function printInpatientByDortor($fname, $lname, $phone, $gender, $result){
 
     echo $element;
 }
+
+function printPaymentByPatient($kind , $Mname, $Price){
+    $element = "
+    <tr>
+        <td>$kind</td>
+        <td>$Mname</td>
+        <td>$Price</td>
+    </tr>
+    ";
+
+    echo $element;
+}
+
 ?>
