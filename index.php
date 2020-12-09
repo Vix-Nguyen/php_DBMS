@@ -15,7 +15,7 @@ $result = mysqli_query($conn, $sql);
     <title>Hospital</title>
 </head>
 <body>
-    <h1>HELLO WORRLD</h1>
+    <h1>HOSPITAL_DBS</h1>
     <form action="index.php" method="post">
     First name of patient: <input type="text" name="fname">
     Last name of patient: <input type="text" name="lname">

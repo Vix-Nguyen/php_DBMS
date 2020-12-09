@@ -16,5 +16,17 @@ function searchPatient($id, $fname, $lname, $DoB, $Phone, $Addr, $gender){
     echo $element;
 }
 
+function printInpatientByDortor($fname, $lname, $phone, $gender, $result){
+    $element = "
+    <tr>
+        <td>$fname</td>
+        <td>$lname</td>
+        <td>$phone</td>
+        <td>$gender</td>
+        <td>$result</td>
+    </tr>
+    ";
 
+    echo $element;
+}
 ?>
