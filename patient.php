@@ -2,15 +2,11 @@
 require_once("connection.php");
 require_once("component.php");
 
-if(!isset($_POST['fname']) && !isset($_POST['lname']))
-{
-    exit;
-}
 // echo $name[0];
 // echo $name[$nameLength];
 
-$fname = isset($_POST['fname']) ? $_POST['fname'] : NULL;
-$lname = isset($_POST['lname']) ? $_POST['lname'] : NULL;
+$fname = strlen($_POST['fname']) != 0 ? $_POST['fname'] : NULL;
+$lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
 echo gettype($fname);
 echo gettype($lname);
 if (isset($fname) && isset($lname)) {
