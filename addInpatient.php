@@ -15,7 +15,7 @@ $result = mysqli_query($conn, $sql);
     <title>Document</title>
 </head>
 <body>
-<h1>Add new patient infor: CLASS INPATIENT</h1>
+<h1>Add new patient info: CLASS INPATIENT</h1>
     <form action="addInpatient.php" style="margin-left: 40%;" method="post">
 
         <label for="adm">Admission date:</label><br>

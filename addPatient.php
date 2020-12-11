@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1>Add new patient infor</h1>
+<h1>Add new patient info</h1>
     <form action="addPatient.php" style="margin-left: 40%;" method="post">
         <label for="fname">First name:</label><br>
         <input type="text" name="fname"  placeholder="John"><br><br>
