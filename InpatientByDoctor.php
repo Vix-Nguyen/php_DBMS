@@ -8,12 +8,10 @@ if (!isset($_POST['fname']) || !isset($_POST['lname']))
     exit;
 }
 
-
-
+$sql = "";
+$result = FALSE;
 $fname = strlen($_POST['fname']) != 0 ? $_POST['fname'] : NULL;
 $lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
-// echo isset($fname);
-// echo gettype($lname);
 
 if (isset($fname) && isset($lname)) {
     $sql = "SELECT P.Fname, P.Lname, P.Phone, P.Gender, T.result
@@ -24,7 +22,7 @@ if (isset($fname) && isset($lname)) {
         FROM employee as E, doctor as D 
         WHERE E.Id = D.Id 
         and Fname = '$fname' and Lname = '$lname' )
-    ";
+    ORDER BY P.Lname";
 }
 else if (isset($fname)) {
     $sql = "SELECT P.Fname, P.Lname, P.Phone, P.Gender, T.result
@@ -35,7 +33,7 @@ else if (isset($fname)) {
         FROM employee as E, doctor as D 
         WHERE E.Id = D.Id 
         and Fname = '$fname')
-    ";
+    ORDER BY P.Lname";
 }
 else if (isset($lname)) {
     $sql = "SELECT P.Fname, P.Lname, P.Phone, P.Gender, T.result
@@ -46,10 +44,12 @@ else if (isset($lname)) {
         FROM employee as E, doctor as D 
         WHERE E.Id = D.Id 
         and Lname = '$lname' )
-    ";
+    ORDER BY P.Lname";
 }
 
-$result = mysqli_query($conn, $sql);
+if (!strlen($sql) == 0) {
+    $result = mysqli_query($conn, $sql);
+}
 
 ?>
 <!DOCTYPE html>
@@ -63,12 +63,12 @@ $result = mysqli_query($conn, $sql);
         <th>Result</th>
     </tr>
     <?php
-    if ($result != FALSE) {
+    if ($result) {
         while ($row = mysqli_fetch_assoc($result)){
-            printInpatientByDortor($row['Fname'], $row['Lname'], $row['Phone'], $row['Gender'], $row['result']);
+            printInpatientByDoctor($row['Fname'], $row['Lname'], $row['Phone'], $row['Gender'], $row['result']);
         }
     }
     ?>
-        </table>
+</table>
 </body>
 </html>

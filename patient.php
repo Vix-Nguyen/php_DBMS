@@ -2,19 +2,14 @@
 require_once("connection.php");
 require_once("component.php");
 
-// echo $name[0];
-// echo $name[$nameLength];
 if (!isset($_POST['fname']) || !isset($_POST['lname'])) 
 {
     exit;
 }
 
-
-
 $fname = strlen($_POST['fname']) != 0 ? $_POST['fname'] : NULL;
 $lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
-// echo isset($fname);
-// echo gettype($lname);
+
 if (isset($_POST['all'])) {
     $sql = "SELECT * FROM patient";
 }
@@ -41,7 +36,7 @@ $result = mysqli_query($conn, $sql);
         <th>Phone</th>
     </tr>
     <?php
-    if ($result != FALSE) {
+    if ($result) {
         while ($row = mysqli_fetch_assoc($result)){
             searchPatient($row['Id'], $row['Fname'], $row['Lname'], $row['Phone']);
         }

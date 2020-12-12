@@ -50,22 +50,17 @@ require("connection.php");
 
 
 if (!isset($_POST['submit'])) {
-    // echo '<script>alert("This ID is  valid")</script>';
     exit;
 }
 
 $fname = isset($_POST['fname']) ? $_POST['fname'] : '';
 $lname = isset($_POST['lname']) ? $_POST['lname'] : '';
 $class = isset($_POST['class']) ? $_POST['class'] : '';
-// $id = isset($_POST['id']) ? $_POST['id'] : '';
 $DOB = isset($_POST['DOB']) ? $_POST['DOB']: '';
 $phone = isset($_POST['phone']) ? $_POST['phone']: '';
 $address = isset($_POST['address']) ? $_POST['address']: '';
 $gender = isset($_POST['Gender']) ? $_POST['Gender']: '';
 
-
-// $result = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
 $id = '';
 
 if ($class == "IP") {
@@ -77,7 +72,6 @@ if ($class == "IP") {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $idnew = $row['I'] + 1;
-    // echo $row['I'];
 
     if ($idnew > 999) {
         $id = "IP0" . strval($idnew);
@@ -107,17 +101,16 @@ else{
     if ($idnew > 999) {
         $id = "OP0" . strval($idnew);
     }
-    else if ($idnew > 100) {
+    else if ($idnew > 99) {
         $id = "OP00" . strval($idnew);
     }
-    else if ($idnew > 100) {
+    else if ($idnew > 9) {
         $id = "OP000" . strval($idnew);
     }
-    else{
+    else {
         $id = "OP0000" . strval($idnew);
     }
 }
-
 
 
     $sql = "INSERT INTO patient (fname, lname, id, dob, phone, address, gender)
@@ -143,5 +136,5 @@ else{
     }
 
 mysqli_close($conn);
-?>
 
+?>
