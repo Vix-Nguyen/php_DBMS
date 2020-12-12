@@ -13,11 +13,12 @@ $result = mysqli_query($conn, $sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style-index.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Hospital</title>
 </head>
 
 <body>
-    <h1>HOSPITAL</h1>
+    <h1 style="text-align: center">HOSPITAL</h1>
     <form action="index.php" method="post">
         First name of patient: <input type="text" name="fname">
         Last name of patient: <input type="text" name="lname">

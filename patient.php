@@ -30,7 +30,7 @@ $result = mysqli_query($conn, $sql);
 <!DOCTYPE html>
 
 <body>
-    <table>
+    <table class="table">
         <tr>
             <th>Id</th>
             <th>First Name</th>
