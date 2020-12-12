@@ -31,24 +31,24 @@ CREATE TABLE EMPLOYEE (
 
 -- insert employees
 INSERT INTO Employee(Fname, Lname, DOB, Address, StartDate, Gender, Speciality, DepartmentId)
-VALUES 	('Nguyen', 'A', '1990-01-01', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Head Chief of Medicine', '1'),
-		('Tram', 'B', '1993-11-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Surgical Attending Physician', '2'),
+VALUES 	('Nguyen', 'A', '1980-01-01', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Head Chief of Medicine', '1'),
+		('Tram', 'B', '1973-11-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Surgical Attending Physician', '2'),
         ('Le', 'C', '1985-10-10', '38 Ly Thuong Kiet Street', '2012-06-06', 'Male', 'Psychiatrist', '3'),
         ('Hoang', 'D', '1983-12-23', '128 Nguyen Van Troi Street', '2014-07-03', 'Female', 'Plastic Surgery', '4'),
-        ('Tran', 'E', '1997-12-12', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'General Practice', '5'),
-        ('Nguyen', 'F', '1990-09-01', '118 Xo Viet Nghe Tinh Street', '2013-10-01', 'Male', 'Emergency Medicine', '1'),
-		('Tram', 'G', '1993-10-11', '120 Hoang Hoa Tham Street', '2006-05-22', 'Male', 'Neurosurgery', '2'),
+        ('Tran', 'E', '1977-12-12', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'General Practice', '5'),
+        ('Nguyen', 'F', '1979-09-01', '118 Xo Viet Nghe Tinh Street', '2013-10-01', 'Male', 'Emergency Medicine', '1'),
+		('Tram', 'G', '1974-10-11', '120 Hoang Hoa Tham Street', '2006-05-22', 'Male', 'Neurosurgery', '2'),
         ('Le', 'H', '1985-01-10', '9A Pham Dinh Ho Street', '2000-01-06', 'Male', 'Cardiology', '3'),
         ('Hoang', 'I', '1983-02-23', '12B Vo Van Ngan Street', '2004-07-03', 'Female', 'Medical Genetic', '4'),
-        ('Tran', 'J', '1997-11-12', '108D Cach Mang Thang Tam Street', '2012-05-15', 'Female', 'Oncology', '5')
+        ('Tran', 'J', '1976-11-12', '108D Cach Mang Thang Tam Street', '2012-05-15', 'Female', 'Oncology', '5')
 ;
 
 INSERT INTO Employee(Fname, Lname, DOB, Address, StartDate, Gender, Speciality, DepartmentId)
-VALUES 	('Nguyen', 'K', '1990-01-31', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Neonatal Nurse', '1'),
-		('Thai', 'L', '1993-07-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Nurse Midwife', '2'),
+VALUES 	('Nguyen', 'K', '1981-01-31', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Neonatal Nurse', '1'),
+		('Thai', 'L', '1975-07-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Nurse Midwife', '2'),
         ('Ha', 'M', '1985-10-10', '38 Ly Thuong Kiet Street', '2012-06-06', 'Male', 'Clinical Nurse', '3'),
         ('Hua', 'N', '1983-09-13', '128 Nguyen Van Troi Street', '2014-07-03', 'Female', 'Critical Care Nurse', '4'),
-        ('Do', 'O', '1997-10-05', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'Dialysis Nurse', '5')
+        ('Do', 'O', '1979-10-05', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'Dialysis Nurse', '5')
 ;
 
 CREATE TABLE EmpPhone (
@@ -117,34 +117,6 @@ CREATE TABLE INPATIENT (
     FOREIGN KEY (NurseId) REFERENCES NURSE(Id) ON UPDATE CASCADE,
     PRIMARY KEY (Id)
 );
-
-DROP TRIGGER IF EXISTS checkInpatientId;
-DELIMITER //
-CREATE TRIGGER checkInpatientId BEFORE INSERT ON INPATIENT
-FOR EACH ROW
-BEGIN
-    IF NOT( NEW.Id LIKE 'IP%' ) THEN
-        SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Inpatient Id must begin with IP';
-    END IF;
-END //
-DELIMITER ;  
-
-CREATE TABLE OUTPATIENT (
-	Id				varchar(7)				NOT NULL,
-    FOREIGN KEY (Id) REFERENCES PATIENT(Id) ON UPDATE CASCADE,
-    PRIMARY KEY (Id)
-);
-
-DROP TRIGGER IF EXISTS checkOutpatientId;
-DELIMITER //
-CREATE TRIGGER checkOutpatientId BEFORE INSERT ON OUTPATIENT
-FOR EACH ROW
-BEGIN
-    IF NOT( NEW.Id LIKE 'OP%' ) THEN
-        SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Inpatient Id must begin with IP';
-    END IF;
-END //
-DELIMITER ;  
 
 CREATE TABLE MEDICATION (
 	Id		int		NOT NULL AUTO_INCREMENT,
@@ -287,6 +259,73 @@ VALUES 	(1, 'IP00001', 3),
         (3, 'IP00003', 2), 
         (3, 'IP00003',4)
 ;
+
+DROP TRIGGER IF EXISTS checkInpatientId;
+DELIMITER //
+CREATE TRIGGER checkInpatientId BEFORE INSERT ON INPATIENT
+FOR EACH ROW
+BEGIN
+    IF NOT( NEW.Id LIKE 'IP%' ) THEN
+        SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Inpatient Id must begin with IP';
+    END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS checkOutpatientId;
+DELIMITER //
+CREATE TRIGGER checkOutpatientId BEFORE INSERT ON OUTPATIENT
+FOR EACH ROW
+BEGIN
+    IF NOT( NEW.Id LIKE 'OP%' ) THEN
+        SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Inpatient Id must begin with IP';
+    END IF;
+END //
+DELIMITER ;
+
+-- Trigger for the Dean of an aparment:
+-- The dean must hold a specific speciality and has had more than
+-- 5 years of experience since the date he or she was awarded the
+-- speciality degree
+DROP TRIGGER IF EXISTS deanConstraints_update;
+DELIMITER //
+CREATE TRIGGER deanConstraints_update
+BEFORE UPDATE ON DEPARTMENT
+FOR EACH ROW
+BEGIN
+    DECLARE dean_year INT;
+    DECLARE current_year INT;
+    SET dean_year = (
+        SELECT EXTRACT(YEAR FROM EMPLOYEE.BDATE)
+        WHERE EMPLOYEE.Id = NEW.DeanId
+    );
+    SET current_year = EXTRACT(YEAR FROM SYSDATE());
+
+    IF current_year - dean_year < 5 THEN SIGNAL SQLSTATE '77777'
+        SET MESSAGE_TEXT = 'The Dean must had more than 5 year of experience in his speciality!' ;
+    END IF;
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS deanConstraints_insert;
+DELIMITER //
+CREATE TRIGGER deanConstraints_insert
+BEFORE INSERT ON DEPARTMENT
+FOR EACH ROW
+BEGIN
+    DECLARE dean_year INT;
+    DECLARE current_year INT;
+    SET dean_year = (
+        SELECT EXTRACT(YEAR FROM EMPLOYEE.BDATE)
+        WHERE EMPLOYEE.Id = NEW.DeanId
+    );
+    SET current_year = EXTRACT(YEAR FROM SYSDATE());
+
+    IF current_year - dean_year < 5 THEN SIGNAL SQLSTATE '77777'
+        SET MESSAGE_TEXT = 'The Dean must had more than 5 year of experience in his speciality!' ;
+    END IF;
+END //
+DELIMITER ;
+
 
 -- a. Increase Inpatient Fee to 10% for all the inpatients who are admitted to hospital
 -- from 01/09/2020. (0.5 mark)
