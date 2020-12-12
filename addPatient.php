@@ -4,12 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
+    <style>
+        body {
+            background-color: powderblue;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Add new patient infor</h1>
-    <form action="addPatient.php" style="margin-left: 40%;" method="post">
+    <h2>Add new patient</h2>
+    <form class="form-group" action="addPatient.php" style="margin-left: 40%;" method="post">
         <label for="fname">First name:</label><br>
         <input type="text" name="fname" placeholder="John"><br><br>
 
@@ -40,7 +46,7 @@
 
 
 
-        <input name="submit" type="submit" value="Submit">
+        <input class="btn btn-primary" name="submit" type="submit" value="Submit">
     </form>
 </body>
 

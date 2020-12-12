@@ -15,17 +15,23 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="style-index.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Hospital</title>
+    <style>
+        body {
+            background-color: powderblue;
+        }
+    </style>
 </head>
 
 <body>
     <h1 style="text-align: center">HOSPITAL</h1>
+    <span class="oi oi-icon-name" title="icon name" aria-hidden="true"></span>
     <form action="index.php" method="post">
         First name of patient: <input type="text" name="fname">
         Last name of patient: <input type="text" name="lname">
-        <input type="submit">
+        <input class="btn btn-primary btn-sm" type="submit">
         <br>
-        <button name="all" style="margin-top: 20px;">Search all patient</button>
-        <button formaction="addPatient.php" method="post">Add new patient</button>
+        <button class="btn btn-primary btn-sm" name="all" style="margin-top: 20px;">Search all patient</button>
+        <button class="btn btn-success btn-sm" formaction="addPatient.php" style="margin-top: 20px;">Add new patient</button>
     </form>
     <!-- <?php
             // if(isset($_POST["searchAll"])){

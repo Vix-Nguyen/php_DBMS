@@ -10,8 +10,8 @@ function searchPatient($id, $fname, $lname, $Phone)
         <td>$fname</td>
         <td>$lname</td>
         <td>$Phone</td>
-        <td><button formaction='editPatient.php' name='edit' value='$id'>Edit</button></td>
-        <td><button formaction='deletePatient.php' name='delete' value='$id'>Delete</button></td>
+        <td><button class='btn btn-warning btn-sm' formaction='editPatient.php' name='edit' value='$id'>Edit</button></td>
+        <td><button class='btn btn-danger btn-sm' formaction='deletePatient.php' name='delete' value='$id'>Delete</button></td>
     </tr>
     </form>
     ";
