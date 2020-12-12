@@ -1,32 +1,71 @@
 <?php
-require_once("connection.php");
-require_once("component.php");
+   include("connection.php");
+   session_start();
+   $error = "";
+   
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
+      $username = mysqli_real_escape_string($conn,$_POST['username']);
+      $password = mysqli_real_escape_string($conn,$_POST['password']);
+      
+      $sql = "SELECT id FROM DBA WHERE username = '$username' and password = '$password'";
+      $result = mysqli_query($conn,$sql);     
+      $count = mysqli_num_rows($result);
 
-$sql = "SELECT * FROM patient";
-$result = mysqli_query($conn, $sql);
+      if($count == 1) {
+         $_SESSION['username'] = $username;
+         header("location: main.php");
+      } else {
+         $error = "Your Login Name or Password is invalid";
+      }
+   }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"/>
-    <title>Hospital</title>
-</head>
-<body>
-    <h1>HOSPITAL DBS2021</h1>
-    <form action="index.php" method="post">
-    First name of patient: <input type="text" name="fname">
-    Last name of patient: <input type="text" name="lname">
-        <input type="submit" value="Search" style="margin-left: 5px;">
-        <button style="margin-left: 5px; margin-bottom: 20px;" name="all">Search all patient</button>
-        <br>
+   <head>
+      <title>Login</title>
+      
+      <style type = "text/css">
+         body {
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:14px;
+            text-align: center;
+         }
+         label {
+            font-weight:bold;
+            width:100px;
+            font-size:14px;
+         }
+         .box {
+            border:#666666 solid 1px;
+         }
+         div {
+            text-align: left;
+         }
+      </style>
+      
+   </head>
+   
+   <body color = "#FFFFFF">
+      <div>
+         <div style = "width:300px; border: solid 1px #333333; ">
+            <div style = "background-color:#333333; color:#FFFFFF; padding:3px;"><strong>Login</strong></div>
+				
+            <div style = "margin:30px">
+               
+               <form action = "" method = "post">
+                  <label>UserName:  </label><input type = "text" name = "username" class = "box"/> <br> <br>
+                  <label>Password:  <br> </label><input type = "password" name = "password" class = "box"/> <br> <br>
+                  <input type = "submit" value = " Login "/><br/>
+               </form>
+               
+               <div style = "font-size:11px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
+					
+            </div>
+				
+         </div>
+			
+      </div>
 
-        <button formaction="addPatient.php" method="post" style="margin-bottom: 20px;">Add new patient</button>
-        <button formaction="cau3_search_Inpatient_by_doctor.php" method="post" style="margin-left: 5px;">Search by doctor name</button>
-        <button formaction="cau4_search_payment_by_patient.php" method="post" style="margin-left: 5px;">Search patient's payment</button>
-    </form>
-    <?php require("patient.php"); ?>
-</body>
+   </body>
 </html>
