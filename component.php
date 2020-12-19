@@ -3,12 +3,16 @@
 function searchPatient($id, $fname, $lname, $Phone){
 
     $element = "
+    <form action='./main.php' method='post'>
     <tr>
         <td>$id</td>
         <td>$fname</td>
         <td>$lname</td>
         <td>$Phone</td>
+        <td><button class='btn btn-warning btn-sm' formaction='editPatient.php' name='edit' value='$id'>Edit</button></td>
+        <td><button class='btn btn-danger btn-sm' formaction='deletePatient.php' name='delete' value='$id'>Delete</button></td>
     </tr>
+    </form>
     ";
 
     echo $element;
@@ -27,6 +31,8 @@ function getInfor($id){
             <td>Start Date</td>
             <td>End Date</td>
             <td>Result</td>
+            <td></td>
+            <td></td>
         </tr>";
         echo $element;
         $sql = "SELECT * FROM treatment WHERE PatientId='$id'";
@@ -42,17 +48,21 @@ function getInfor($id){
                 <td>$stD</td>
                 <td>$enD</td>
                 <td>$rsl</td>
+                <td></td>
+                <td></td>
             </tr>";
             echo $element;
         }
     }
-    else{
+    else {
         $element ="    
         <tr style='background-color: tomato'>
             <td>Doctor</td>
             <td>Examination Date</td>
             <td>Fee</td>
             <td>Second Date</td>
+            <td></td>
+            <td></td>
         </tr>";
         echo $element;
 
@@ -69,6 +79,8 @@ function getInfor($id){
                 <td>$stD</td>
                 <td>$enD</td>
                 <td>$rsl</td>
+                <td></td>
+                <td></td>
             </tr>";
             echo $element;
         }
@@ -89,9 +101,10 @@ function printInpatientByDoctor($fname, $lname, $phone, $gender, $result){
     echo $element;
 }
 
-function printPaymentByPatient($Fname, $Lname, $kind , $Mname, $Price){
+function printPaymentByPatient($VisitID, $Fname, $Lname, $kind , $Mname, $Price){
     $element = "
     <tr>
+        <td>$VisitID</td>
         <td>$Fname</td>
         <td>$Lname</td>
         <td>$kind</td>

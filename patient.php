@@ -34,6 +34,8 @@ $result = mysqli_query($conn, $sql);
         <th>First Name</th>
         <th>Last Name</th>
         <th>Phone</th>
+        <th></th>
+        <th></th>
     </tr>
     <?php
     if ($result) {
