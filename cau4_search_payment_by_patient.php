@@ -1,11 +1,8 @@
 <?php
 require_once("connection.php");
 require_once("component.php");
-
-// $sql = "SELECT * FROM patient";
-// $result = mysqli_query($conn, $sql);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,17 +12,14 @@ require_once("component.php");
     <title>Hospital</title>
 </head>
 <body>
-    <h1>HOSPITAL_DBS</h1>
-    <h2>Search Payment by Patient</h2>
+    <h1>HOSPITAL DBS2021</h1>
+    <h2>Search for payment of a patient</h2>
     <form action="cau4_search_payment_by_patient.php" method="post">
     First name of Patient: <input type="text" name="fname">
     Last name of Patient: <input type="text" name="lname">
-    <input type="submit">
+    <input type="submit" value="Search" style="margin-left: 5px;margin-bottom: 20px;">
     </form>
 
-    <?php
-    //} 
-    require("paymentByPatient.php");
-    ?>
+    <?php require("paymentByPatient.php"); ?>
 </body>
 </html>

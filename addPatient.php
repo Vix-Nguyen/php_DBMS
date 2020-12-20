@@ -14,8 +14,8 @@
 </head>
 
 <body>
-    <h2>Add new patient</h2>
-    <form class="form-group" action="addPatient.php" style="margin-left: 40%;" method="post">
+    <h1>Add new patient info</h1>
+    <form action="addPatient.php" style="margin-left: 40%;" method="post">
         <label for="fname">First name:</label><br>
         <input type="text" name="fname" placeholder="John"><br><br>
 
@@ -59,22 +59,17 @@ require("connection.php");
 
 
 if (!isset($_POST['submit'])) {
-    // echo '<script>alert("This ID is  valid")</script>';
     exit;
 }
 
 $fname = isset($_POST['fname']) ? $_POST['fname'] : '';
 $lname = isset($_POST['lname']) ? $_POST['lname'] : '';
 $class = isset($_POST['class']) ? $_POST['class'] : '';
-// $id = isset($_POST['id']) ? $_POST['id'] : '';
 $DOB = isset($_POST['DOB']) ? $_POST['DOB'] : '';
 $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 $address = isset($_POST['address']) ? $_POST['address'] : '';
 $gender = isset($_POST['Gender']) ? $_POST['Gender'] : '';
 
-
-// $result = mysqli_query($conn, $sql);
-// $row = mysqli_fetch_assoc($result);
 $id = '';
 
 if ($class == "IP") {
@@ -86,7 +81,6 @@ if ($class == "IP") {
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     $idnew = $row['I'] + 1;
-    // echo $row['I'];
 
     if ($idnew > 999) {
         $id = "IP0" . strval($idnew);
@@ -111,9 +105,9 @@ if ($class == "IP") {
 
     if ($idnew > 999) {
         $id = "OP0" . strval($idnew);
-    } else if ($idnew > 100) {
+    } else if ($idnew > 99) {
         $id = "OP00" . strval($idnew);
-    } else if ($idnew > 100) {
+    } else if ($idnew > 9) {
         $id = "OP000" . strval($idnew);
     } else {
         $id = "OP0000" . strval($idnew);
@@ -121,28 +115,16 @@ if ($class == "IP") {
 }
 
 
-
 $sql = "INSERT INTO patient (fname, lname, id, dob, phone, address, gender)
-    VALUES ('$fname', '$lname', '$id', '$DOB', '$phone', '$address', '$gender');";
+    VALUES ('$fname', '$lname', '$id', '$dob', '$phone', '$address', '$gender');";
 
 if (mysqli_multi_query($conn, $sql)) {
-    echo '<script>alert("Add patient successful")</script>';
+    echo '<script>alert("Add OUTpatient successful")</script>';
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
+header("location:index.php");
 
-if ($class == "IP") {
-    header("location:addInpatient.php");
-} else {
-    $sql = "INSERT INTO outpatient (id)
-        VALUES ('$id');";
-    if (mysqli_multi_query($conn, $sql)) {
-        echo '<script>alert("Add OUTpatient successful")</script>';
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    }
-    header("location:index.php");
-}
 unset($_POST);
 
 mysqli_close($conn);

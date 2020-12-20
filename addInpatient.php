@@ -1,10 +1,7 @@
 <?php
 require_once("connection.php");
-
 $sql = "SELECT id FROM nurse";
 $result = mysqli_query($conn, $sql);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +20,7 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body>
-    <h2>Add new patient infor: CLASS INPATIENT</h2>
+    <h1>Add new patient info: CLASS INPATIENT</h1>
     <form action="addInpatient.php" style="margin-left: 40%;" method="post">
 
         <label for="adm">Admission date:</label><br>
@@ -53,13 +50,13 @@ $result = mysqli_query($conn, $sql);
 </body>
 
 </html>
+
 <?php
-// error_reporting(0);
 
 if (!isset($_POST['submit2'])) {
-    // echo '<script>alert("This ID is  valid")</script>';
     exit;
 }
+
 session_start();
 $id = $_SESSION['id'];
 $adm = isset($_POST['adm']) ? $_POST['adm'] : '';
@@ -78,7 +75,5 @@ if (mysqli_multi_query($conn, $sql)) {
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
-
-unset($_POST);
 
 ?>
