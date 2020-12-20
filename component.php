@@ -88,7 +88,7 @@ function getInfor($id)
     }
 }
 
-function printInpatientByDoctor($fname, $lname, $phone, $gender, $result)
+function printInpatientByDoctor($fname, $lname, $phone, $gender, $result, $DOB, $Address)
 {
     $element = "
     <tr>
@@ -96,6 +96,8 @@ function printInpatientByDoctor($fname, $lname, $phone, $gender, $result)
         <td>$lname</td>
         <td>$phone</td>
         <td>$gender</td>
+        <td>$DOB</td>
+        <td>$Address</td>
         <td>$result</td>
     </tr>
     ";
@@ -103,7 +105,7 @@ function printInpatientByDoctor($fname, $lname, $phone, $gender, $result)
     echo $element;
 }
 
-function printPaymentByPatient($Fname, $Lname, $kind, $Mname, $Price)
+function printPaymentByPatient($Fname, $Lname, $kind, $Mname, $Price, $Id, $MId)
 {
     $element = "
     <tr>
@@ -112,6 +114,8 @@ function printPaymentByPatient($Fname, $Lname, $kind, $Mname, $Price)
         <td>$kind</td>
         <td>$Mname</td>
         <td>$Price</td>
+        <td>$MId</td>
+        <td>$Id</td>
     </tr>
     ";
 

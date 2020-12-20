@@ -19,7 +19,7 @@ $lname = strlen($_POST['lname']) != 0 ? $_POST['lname'] : NULL;
 // echo gettype($lname);
 
 if (isset($fname) && isset($lname)) {
-   $sql1 = "SELECT M.Mname, M.Price, O.Fname, O.Lname
+   $sql1 = "SELECT M.Mname, M.Price, O.Fname, O.Lname, M.Id as MId, O.Id
    FROM treat_med as TM, medication as M,
    ( 
    SELECT T.Id, T.PatientId, P.Fname, P.Lname
@@ -30,7 +30,7 @@ if (isset($fname) && isset($lname)) {
    WHERE O.Id = TM.TreatId and O.PatientId = TM.PatientId
        and M.Id = TM.MedId
     ORDER BY O.Lname";
-    $sql2 = "SELECT M.Mname, M.Price, S.Fname, S.Lname
+    $sql2 = "SELECT M.Mname, M.Price, S.Fname, S.Lname, M.Id as MId, S.Id
     FROM exam_med as EM, medication as M,
     ( 
     SELECT E.Id, E.PatientId, P.Fname, P.Lname
@@ -43,7 +43,7 @@ if (isset($fname) && isset($lname)) {
     ORDER BY S.Lname";
 }
 else if (isset($fname)) {
-    $sql1 = "SELECT M.Mname,  M.Price, O.Fname, O.Lname
+    $sql1 = "SELECT M.Mname,  M.Price, O.Fname, O.Lname, M.Id as MId, O.Id
    FROM treat_med as TM, medication as M,
    ( 
    SELECT T.Id, T.PatientId, P.Fname, P.Lname
@@ -54,7 +54,7 @@ else if (isset($fname)) {
    WHERE O.Id = TM.TreatId and O.PatientId = TM.PatientId
        and M.Id = TM.MedId
     ORDER BY O.Lname";
-    $sql2 = "SELECT  M.Mname, M.Price, S.Fname, S.Lname
+    $sql2 = "SELECT  M.Mname, M.Price, S.Fname, S.Lname, M.Id as MId, S.Id 
     FROM exam_med as EM, medication as M,
     ( 
     SELECT E.Id, E.PatientId, P.Fname, P.Lname
@@ -67,7 +67,7 @@ else if (isset($fname)) {
     ORDER BY S.Lname";
 }
 else if (isset($lname)) {
-    $sql1 = "SELECT  M.Mname, M.Price, O.Fname, O.Lname
+    $sql1 = "SELECT  M.Mname, M.Price, O.Fname, O.Lname, M.Id as MId, O.Id
     FROM treat_med as TM, medication as M,
     ( 
     SELECT T.Id, T.PatientId, P.Fname, P.Lname
@@ -78,7 +78,7 @@ else if (isset($lname)) {
     WHERE O.Id = TM.TreatId and O.PatientId = TM.PatientId
         and M.Id = TM.MedId
     ORDER BY O.Lname";
-     $sql2 = "SELECT M.Mname,  M.Price, S.Fname, S.Lname
+     $sql2 = "SELECT M.Mname,  M.Price, S.Fname, S.Lname, M.Id as MId, S.Id as ID 
      FROM exam_med as EM, medication as M,
      ( 
      SELECT E.Id, E.PatientId, P.Fname, P.Lname
@@ -102,21 +102,28 @@ if (!strlen($sql2) == 0) {
 ?>
 <!DOCTYPE html>
 <body>
+<?php
+if($fname)
+  echo "Reports about the payment for each treatment or examination of a patient: "; echo $fname; echo " "; echo $lname; 
+
+?>
 <table>
-    <tr>
+    <tr style='background-color: tomato'>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Kind of patient</th>
         <th>Name of medication</th>
         <th>Price</th>
+        <th>Medication ID</th>
+        <th>Treat/Exam ID</th>
     </tr>
     <?php
     if ($result_1 || $result_2) {
         while ($row = mysqli_fetch_assoc($result_1)){
-            printPaymentByPatient($row['Fname'], $row['Lname'], 'Inpatient' , $row['Mname'], $row['Price']);
+            printPaymentByPatient($row['Fname'], $row['Lname'], 'Inpatient' , $row['Mname'], $row['Price'], $row['Id'], $row['MId'] );
         }
         while ($row = mysqli_fetch_assoc($result_2)){
-            printPaymentByPatient($row['Fname'], $row['Lname'], 'Outpatient' , $row['Mname'], $row['Price']);
+            printPaymentByPatient($row['Fname'], $row['Lname'], 'Outpatient' , $row['Mname'], $row['Price'], $row['Id'], $row['MId']);
         }
     }
     ?>

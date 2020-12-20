@@ -179,7 +179,7 @@ VALUES 	('IP00001','Nguyen', 'An', '1999-03-14', '0908734232' ,'23 An Duong Vuon
         ('IP00005','Nguyen', 'Kha', '1989-07-09', '0928334262' ,'73 Ly Thuong Kiet', 'Male'),
         ('IP00006','Le', 'Lam', '1977-03-26', '0909756277' ,'45 Hoang Van Thu', 'Female'),
         ('OP00001', 'Tran', 'Thanh', '2003-12-14', '0998758739' ,'59 Hoang Hoa Tham', 'Male'),
-        ('OP00002','Hoang', 'Anh', '1997-05-02', '0908667668' ,'123 Hoa Hao', 'Female'),
+        ('OP00002','Nguyen', 'An', '1997-05-02', '0908667668' ,'123 Hoa Hao', 'Female'),
         ('OP00003','Ly', 'Hoa', '1990-01-15', '0908556557' ,'23 An Duong Vuong', 'Female'),
         ('OP00004','Nguyen', 'Phuong', '1973-06-12', '0906574638' ,'52 Vo Truong Toan', 'Male'),
         ('OP00005','Nguyen', 'Tram', '1967-10-29', '0988909001' ,'33 Pham Van Dong', 'Female'),
