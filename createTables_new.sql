@@ -31,24 +31,24 @@ CREATE TABLE EMPLOYEE (
 
 -- insert employees
 INSERT INTO Employee(Fname, Lname, DOB, Address, StartDate, Gender, Speciality, DepartmentId)
-VALUES 	('Nguyen', 'A', '1980-01-01', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Head Chief of Medicine', '1'),
-		('Tram', 'B', '1973-11-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Surgical Attending Physician', '2'),
+VALUES 	('Nguyen', 'A', '1990-01-01', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Head Chief of Medicine', '1'),
+		('Tram', 'B', '1993-11-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Surgical Attending Physician', '2'),
         ('Le', 'C', '1985-10-10', '38 Ly Thuong Kiet Street', '2012-06-06', 'Male', 'Psychiatrist', '3'),
         ('Hoang', 'D', '1983-12-23', '128 Nguyen Van Troi Street', '2014-07-03', 'Female', 'Plastic Surgery', '4'),
-        ('Tran', 'E', '1977-12-12', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'General Practice', '5'),
-        ('Nguyen', 'F', '1979-09-01', '118 Xo Viet Nghe Tinh Street', '2013-10-01', 'Male', 'Emergency Medicine', '1'),
-		('Tram', 'G', '1974-10-11', '120 Hoang Hoa Tham Street', '2006-05-22', 'Male', 'Neurosurgery', '2'),
+        ('Tran', 'E', '1997-12-12', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'General Practice', '5'),
+        ('Nguyen', 'F', '1990-09-01', '118 Xo Viet Nghe Tinh Street', '2013-10-01', 'Male', 'Emergency Medicine', '1'),
+		('Tram', 'G', '1993-10-11', '120 Hoang Hoa Tham Street', '2006-05-22', 'Male', 'Neurosurgery', '2'),
         ('Le', 'H', '1985-01-10', '9A Pham Dinh Ho Street', '2000-01-06', 'Male', 'Cardiology', '3'),
         ('Hoang', 'I', '1983-02-23', '12B Vo Van Ngan Street', '2004-07-03', 'Female', 'Medical Genetic', '4'),
-        ('Tran', 'J', '1976-11-12', '108D Cach Mang Thang Tam Street', '2012-05-15', 'Female', 'Oncology', '5')
+        ('Tran', 'J', '1997-11-12', '108D Cach Mang Thang Tam Street', '2012-05-15', 'Female', 'Oncology', '5')
 ;
 
 INSERT INTO Employee(Fname, Lname, DOB, Address, StartDate, Gender, Speciality, DepartmentId)
-VALUES 	('Nguyen', 'K', '1981-01-31', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Neonatal Nurse', '1'),
-		('Thai', 'L', '1975-07-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Nurse Midwife', '2'),
+VALUES 	('Nguyen', 'K', '1990-01-31', '38 Nguyen Cong Tru Street', '2000-12-13', 'Male', 'Neonatal Nurse', '1'),
+		('Thai', 'L', '1993-07-11', '38 To Hien Thanh Street', '2010-04-05', 'Male', 'Nurse Midwife', '2'),
         ('Ha', 'M', '1985-10-10', '38 Ly Thuong Kiet Street', '2012-06-06', 'Male', 'Clinical Nurse', '3'),
         ('Hua', 'N', '1983-09-13', '128 Nguyen Van Troi Street', '2014-07-03', 'Female', 'Critical Care Nurse', '4'),
-        ('Do', 'O', '1979-10-05', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'Dialysis Nurse', '5')
+        ('Do', 'O', '1997-10-05', '8A Cach Mang Thang Tam Street', '2010-04-15', 'Female', 'Dialysis Nurse', '5')
 ;
 
 CREATE TABLE EmpPhone (
@@ -69,12 +69,6 @@ VALUES 	(1, '0909093222'),
         (3, '0952975299')
 ;
 
-ALTER TABLE DEPARTMENT
-ADD FOREIGN KEY (DeanId) REFERENCES EMPLOYEE(Id) ON UPDATE CASCADE;
-
-ALTER TABLE EMPLOYEE
-ADD FOREIGN KEY (DepartmentId) REFERENCES DEPARTMENT(Id) ON UPDATE CASCADE;
-
 CREATE TABLE DOCTOR (
 	Id		int		NOT NULL,
 	FOREIGN KEY (Id) REFERENCES EMPLOYEE(Id) ON UPDATE CASCADE,
@@ -86,6 +80,12 @@ CREATE TABLE NURSE (
 	FOREIGN KEY (Id) REFERENCES EMPLOYEE(Id) ON UPDATE CASCADE,
     PRIMARY KEY (Id)
 );
+
+ALTER TABLE DEPARTMENT
+ADD FOREIGN KEY (DeanId) REFERENCES DOCTOR(Id) ON UPDATE CASCADE;
+
+ALTER TABLE EMPLOYEE
+ADD FOREIGN KEY (DepartmentId) REFERENCES DEPARTMENT(Id) ON UPDATE CASCADE;
 
 
 INSERT INTO DOCTOR(Id)
@@ -111,10 +111,17 @@ CREATE TABLE INPATIENT (
     AdmissionDate	date,
     DischargeDate	date,
     Fee				int,
+    Diagnosis		varchar(255),
     SickRoom		varchar(255),
     NurseId			int,
     FOREIGN KEY (Id) REFERENCES PATIENT(Id) ON UPDATE CASCADE,
     FOREIGN KEY (NurseId) REFERENCES NURSE(Id) ON UPDATE CASCADE,
+    PRIMARY KEY (Id)
+);
+
+CREATE TABLE OUTPATIENT (
+	Id				varchar(7)				NOT NULL,
+    FOREIGN KEY (Id) REFERENCES PATIENT(Id) ON UPDATE CASCADE,
     PRIMARY KEY (Id)
 );
 
@@ -131,6 +138,7 @@ CREATE TABLE EXAMINATION (
     PatientId	varchar(7)	NOT NULL,
     DoctorId	int,
     ExamDate	date	NOT NULL,
+    Diagnosis		varchar(255),
     Fee			int		NOT NULL,
     SecondDate	date,
     FOREIGN KEY (PatientId) REFERENCES OUTPATIENT(Id) ON UPDATE CASCADE,
@@ -186,13 +194,13 @@ VALUES 	('IP00001','Nguyen', 'An', '1999-03-14', '0908734232' ,'23 An Duong Vuon
         ('OP00006', 'Truong', 'Thu', '2001-07-29', '0988234242' ,'35 Nguyen Hien', 'Female')
 ;
 
-INSERT INTO Inpatient(Id, AdmissionDate, DischargeDate, Fee, SickRoom, NurseId)
-VALUES 	('IP00001', '2019-10-11', '2020-11-11', 1000000, '202', 12), 
-		('IP00002', '2020-09-11', '2020-10-11', 4000000, '301', 11), 
-        ('IP00003', '2019-12-03', '2020-06-18', 7000000, '505', 12), 
-        ('IP00004', '2020-05-11', '2020-05-20', 1000000, '606', 13), 
-        ('IP00005', '2020-05-14', '2020-05-30', 750000, '909', 15), 
-        ('IP00006', '2019-12-15', '2020-02-03', 3000000, '701A', 15)
+INSERT INTO Inpatient(Id, AdmissionDate, DischargeDate, Diagnosis, Fee, SickRoom, NurseId)
+VALUES 	('IP00001', '2019-10-11', '2020-11-11','sick', 1000000, '202', 12), 
+		('IP00002', '2020-09-11', '2020-10-11','vomit', 4000000, '301', 11), 
+        ('IP00003', '2019-12-03', '2020-06-18','headache', 7000000, '505', 12), 
+        ('IP00004', '2020-05-11', '2020-05-20','sick', 1000000, '606', 13), 
+        ('IP00005', '2020-05-14', '2020-05-30','sick', 750000, '909', 15), 
+        ('IP00006', '2019-12-15', '2020-02-03','vomit', 3000000, '701A', 15)
 ;
 
 -- SET FOREIGN_KEY_CHECKS=1;
@@ -210,15 +218,15 @@ VALUES 	('Amphetamines', 'Lower high blood pressure', 10000),
 ;
 
 -- insert examination
-INSERT INTO Examination(PatientId, DoctorId, ExamDate, Fee, SecondDate)
-VALUES	('OP00001', 1, '2020-10-11', 500000, '2020-11-11'),
-		('OP00001', 3, '2020-11-11', 500000, '2020-12-11'),
-        ('OP00001', 4, '2021-01-11', 500000, '2020-02-11'),
-        ('OP00001', 5, '2020-02-11', 500000, '2020-03-11'),
-        ('OP00002', 2, '2019-02-03', 600000, '2019-08-03'),
-        ('OP00002', 4, '2019-08-03', 750000, '2020-02-03'),
-        ('OP00002', 9, '2020-02-03', 700000, '2020-08-03'),
-        ('OP00002', 10, '2020-08-03', 700000, '2021-02-03')
+INSERT INTO Examination(PatientId, DoctorId, ExamDate, Diagnosis, Fee, SecondDate)
+VALUES	('OP00001', 1, '2020-10-11', 'sick',500000, '2020-11-11'),
+		('OP00001', 3, '2020-11-11', 'cough',500000, '2020-12-11'),
+        ('OP00001', 4, '2021-01-11', 'cough',500000, '2020-02-11'),
+        ('OP00001', 5, '2020-02-11', 'sick',500000, '2020-03-11'),
+        ('OP00002', 2, '2019-02-03', 'sick',600000, '2019-08-03'),
+        ('OP00002', 4, '2019-08-03', 'headache',750000, '2020-02-03'),
+        ('OP00002', 9, '2020-02-03', 'broken legs',700000, '2020-08-03'),
+        ('OP00002', 10, '2020-08-03', 'broken legs',700000, '2021-02-03')
 ;
         
 -- insert examination medication
@@ -262,7 +270,7 @@ VALUES 	(1, 'IP00001', 3),
 
 CREATE TABLE DBA (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -290,7 +298,7 @@ BEGIN
         SIGNAL SQLSTATE '12345' SET MESSAGE_TEXT = 'Inpatient Id must begin with IP';
     END IF;
 END //
-DELIMITER ;
+DELIMITER ; 
 
 -- Trigger for the Dean of an aparment:
 -- The dean must hold a specific speciality and has had more than
@@ -335,7 +343,6 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
-
 
 -- a. Increase Inpatient Fee to 10% for all the inpatients who are admitted to hospital
 -- from 01/09/2020. (0.5 mark)
@@ -403,12 +410,12 @@ BEGIN
 	(
 		SELECT DoctorId, COUNT(PatientId) AS Total
 		FROM Examination 
-		WHERE ExamDate > startD 
+		WHERE ExamDate >= startD AND ExamDate <= endD
 		GROUP BY DoctorId
 		UNION ALL
 		SELECT DoctorId, COUNT(PatientId) AS Total
 		FROM Treatment
-		WHERE StartDate > startD AND EndDate < endD
+		WHERE StartDate >= startD AND EndDate <= endD
 		GROUP BY DoctorId
 	) AS A, Employee
 	WHERE Employee.Id = DoctorId
