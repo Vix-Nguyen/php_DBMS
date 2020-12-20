@@ -1,4 +1,5 @@
 <?php
+include('session.php');
 require_once("connection.php");
 require_once("component.php");
 
@@ -14,7 +15,11 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style-main.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>HOSPITAL DBS2021</title>
+    <title>Hospital DBS2021</title>
+    <form action="main.php" method="post" style="float:right;margin-top:10px;margin-right:10px">
+        <button formaction="logout.php" name = "btn_logout" id = "btn_logout" method="post" class="btn btn-success btn-sm"> Logout </button>
+    <br>
+    </form>
     <style>
         body {
             background-color: powderblue;
@@ -22,10 +27,10 @@ $result = mysqli_query($conn, $sql);
     </style>
 </head>
 <body>
-    <h1 style="text-align: center">HOSPITAL DBS2021</h1>
-    <form action="main.php" method="post" style="margin-left:10px;font-size:18px;font-weight:bold;">
-    First name of patient: <input type="text" name="fname" style="font-size:16px;">
-    Last name of patient: <input type="text" name="lname" style="font-size:16px;">
+    <h1 style="text-align:center">HOSPITAL DBS2021</h1>
+    <form action="main.php" method="post" style="margin-left:10px;font-size:16px;font-weight:bold;">
+    First name of patient: <input type="text" name="fname">
+    Last name of patient: <input type="text" name="lname">
         <input class="btn btn-primary btn-sm" type="submit" value="Search" style="margin-left:5px;font-size:16px;">
         <button class="btn btn-primary btn-sm" style="margin-left:5px;font-size:16px;" name="all">Search all</button>
         </br>

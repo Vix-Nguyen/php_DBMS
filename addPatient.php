@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Document</title>
+    <form action="main.php" method="post" style="float:left;margin-top:10px; margin-left:10px">
+        <button name = "btn_back" id = "btn_back" method="post" class="btn btn-success btn-sm"> < Back </button>
+    <br>
+    </form>
     <style>
         body {
             background-color: powderblue;
@@ -56,6 +60,7 @@
 error_reporting(0);
 
 require("connection.php");
+include('session.php');
 
 
 if (!isset($_POST['submit'])) {

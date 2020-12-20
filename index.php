@@ -2,20 +2,31 @@
    include("connection.php");
    session_start();
    $error = "";
+   $_SESSION['is_logged_in'] = FALSE;
    
-   if(isset($_POST['but_login'])) {
+   if($_SERVER["REQUEST_METHOD"] == "POST") {
       $username = mysqli_real_escape_string($conn,$_POST['username']);
       $password = mysqli_real_escape_string($conn,$_POST['password']);
       
-      $sql = "SELECT id FROM DBA WHERE username = '$username' and password = '$password'";
-      $result = mysqli_query($conn,$sql);     
-      $count = mysqli_num_rows($result);
+      if (strlen($username) > 0 && strlen($password) > 0) {
+         $sql = "SELECT id FROM DBA WHERE username = '$username' and password = '$password'";
+         $result = mysqli_query($conn,$sql);     
+         $count = mysqli_num_rows($result);
 
-      if($count == 1) {
-         $_SESSION['username'] = $username;
-         header("location: main.php");
-      } else {
-         $error = "Your Login Name or Password is invalid";
+         if ($count == 1) {
+            $_SESSION['login_user'] = $username;
+            $_SESSION['is_logged_in'] = TRUE;
+            $error = "Login successfully!";
+            echo "<script>setTimeout(\"location = 'main.php';\", 500);</script>";
+         } else {
+            $error = "Your Login Name or Password is invalid";
+         }
+      }
+      else if (strlen($username) == 0 && strlen($password) > 0) {
+         $error = "Please enter user name!";
+      }
+      else if (strlen($username) > 0 && strlen($password) == 0) {
+         $error = "Please enter password!";
       }
    }
 ?>
@@ -48,7 +59,7 @@
             padding: 10px;
          }
          input[type=submit] {
-            font-size:20px;
+            font-size:18px;
             text-align: center;
             margin: right;
          }
@@ -67,7 +78,7 @@
                   <input type = "submit" value = "Login" name="but_login" id="but_login"/><br/>
                </form>
                
-               <div style = "font-size:14px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
+               <div style = "font-size:18px; color:#cc0000; margin-top:10px"><?php echo $error; ?></div>
 					
             </div>
 				

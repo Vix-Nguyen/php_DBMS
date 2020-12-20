@@ -1,4 +1,5 @@
 <?php
+include('session.php');
 require_once("connection.php");
 
 $sql = "SELECT id FROM nurse";
@@ -15,6 +16,10 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>Add new patient</title>
+    <form action="addPatient.php" method="post" style="float:left;margin-top:10px; margin-left:10px">
+        <button name = "btn_back" id = "btn_back" method="post" class="btn btn-success btn-sm"> < Back </button>
+    <br>
+    </form>
     <style>
         body {
             background-color: powderblue;
@@ -48,7 +53,7 @@ $result = mysqli_query($conn, $sql);
             ?>
         </select><br><br>
 
-        <input class="btn btn-primary" name="submit2" type="submit" value="Submit">
+        <input class="btn btn-primary" name="submit2" type="submit" value="Save">
     </form>
 </body>
 
